@@ -6,4 +6,5 @@
 .sx {transform: rotate(355deg);}
 .dx {transform: rotate(5deg);}
 
-.second {width: 100%;justify-content: space-around;}
+.mazzo {position: absolute;left: -70px;}
+.second {width: fit-content;justify-content: space-around;position: relative;gap:50px;}

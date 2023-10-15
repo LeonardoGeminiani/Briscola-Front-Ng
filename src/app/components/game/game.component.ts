@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class GameComponent {
 
   private id: number = 0;
+  private socket:WebSocket;
 
   constructor(private route: ActivatedRoute) {
 
@@ -20,14 +21,14 @@ export class GameComponent {
     });
 
     console.log(this.id);
-    let socket = new WebSocket ( "ws://localhost:5177/ws/" + this.id );
-    socket.addEventListener("open", (event) => {
-      socket.send(JSON.stringify({
+    this.socket = new WebSocket ( "ws://localhost:5177/ws/" + this.id );
+    this.socket.addEventListener("open", (event) => {
+      this.socket.send(JSON.stringify({
           Name: Name
       }));
     });
 
-    socket.addEventListener("message", (event) => 
+    this.socket.addEventListener("message", (event) => 
     {
 
       console.log("Message from server ", event.data);
@@ -56,6 +57,17 @@ export class GameComponent {
             fam = "b";
             break;
         }
+        document.getElementById("briscola")!.className = "briscola " + fam + msg.Card.Number;
+        break;
+      case "pick":
+        document.getElementById("mazzo")!.onclick = () => { this.socket.send(JSON.stringify({
+          Status: "picked"
+        })) }
+        break;
+      case "playerPick":
+        document.getElementById("")
+        break;
+      case "Cards":
 
         break;
       default:
