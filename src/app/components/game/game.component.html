@@ -1,14 +1,15 @@
 <div class="tablegame">
-    <div *ngFor="let m of Mazzi">
-        <div class="cempty" id={{m.ids[0]}}></div>
-        <div class="cempty" id={{m.ids[1]}}></div>
-        <div class="cempty" id={{m.ids[2]}}></div>
+    <div class="second"><div id="mazzo" class="mazzo cempty"></div><div id="briscola" class="cempty"></div></div>
+    <div class="playerswrap">
+        <div class="deck rot-{{m.playerId}}" *ngFor="let m of Mazzi">
+            <div class="cempty" id={{m.ids[0]}}></div>
+            <div class="cempty" id={{m.ids[1]}}></div>
+            <div class="cempty" id={{m.ids[2]}}></div>
+        </div>
     </div>
     <!-- <div class="third">
         <div class="sx cempty"></div><div class="mid cempty"></div><div class="dx cempty"></div>
     </div> -->
     <div *ngFor="let m of Mazzi" id={{m.playerId}}></div>
     <!-- <div id="player1"></div> -->
-
-    <!-- <div class="second"><div id="mazzo" class="mazzo cempty"></div><div id="briscola" class="cempty"></div><div class="cempty"></div></div> -->
 </div>

@@ -40,7 +40,7 @@ export class GameComponent {
       case "playerList":
         this.Mazzi = [];
         msg.Players.forEach((element: { PlayerId: string; PlayerName: string; }) => {
-            document.getElementById("player" + element.PlayerId)!.innerHTML = element.PlayerName;
+            //document.getElementById("player" + element.PlayerId)!.innerHTML = element.PlayerName;
             this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId);
         });
         break;
@@ -64,12 +64,12 @@ export class GameComponent {
         document.getElementById("briscola")!.className = "briscola " + fam + msg.Card.Number;
         break;
       case "pick":
-        document.getElementById("mazzo")!.onclick = () => { this.socket.send(JSON.stringify({
+        /*document.getElementById("mazzo")!.onclick = () => { this.socket.send(JSON.stringify({
           Status: "picked"
-        })) }
+        })) }*/
         break;
       case "playerPick":
-        document.getElementById("")
+        //document.getElementById("")
         break;
       case "Cards":
 
