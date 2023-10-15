@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { mazzo } from '../../models/mazzo';
 
 @Component({
   selector: 'app-game',
@@ -11,6 +11,8 @@ export class GameComponent {
 
   private id: number = 0;
   private socket:WebSocket;
+  
+  Mazzi: mazzo[] = [];
 
   constructor(private route: ActivatedRoute) {
 
@@ -36,8 +38,10 @@ export class GameComponent {
       let fam;
       switch(msg.Status) {
       case "playerList":
+        this.Mazzi = [];
         msg.Players.forEach((element: { PlayerId: string; PlayerName: string; }) => {
             document.getElementById("player" + element.PlayerId)!.innerHTML = element.PlayerName;
+            this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId);
         });
         break;
       case "briscola":
