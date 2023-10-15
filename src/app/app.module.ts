@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateGameComponent } from './components/create-game/create-game.component';
 import { GameComponent } from './components/game/game.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SweetAlert2Module.forRoot(),
     NgbModule
   ],
   providers: [],

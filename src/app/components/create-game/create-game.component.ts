@@ -13,6 +13,12 @@ export class CreateGameComponent {
    */
   constructor(private router: Router) {}
 
+
+  setup() 
+  {
+
+  }
+
   connect()
   {
     console.log('Connecting');

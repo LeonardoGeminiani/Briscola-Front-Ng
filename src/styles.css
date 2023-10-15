@@ -4,16 +4,43 @@
     --c1: #fff;
     --c2: black;
     --c3: #13781D;
+    --c4: #FFC700;
+    --f1: "Bubble Garden Regular";
+    --f2: "Bubble Garden Bold"
 }
+
+@font-face {
+    font-family: 'Bubble Garden Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Bubble Garden Regular'), url('/assets/BubbleGarden-rgj9L.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'Bubble Garden Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Bubble Garden Bold'), url('/assets/BubbleGardenBold-Yz7d4.woff') format('woff');
+    }
 
 body {
     height: 100vh;
     width: 100%;
     overflow-x: hidden;
-    background-color: var(--c3) !important;
+    background: radial-gradient(circle, rgba(64,163,74,1) 0%, rgba(19,120,29,1) 100%);
 }
 
-button { font-weight: bold;}
+.btnb {
+    border: white 1px solid;
+    background-color: var(--c4);
+    color: var(--c1);
+    width: 130px;
+    height: 55px;
+    border-radius: 10px;
+    font-size: 38px;
+    font-family: var(--f1);
+}
 
 .briscola {transform: rotate(90deg);}
 
