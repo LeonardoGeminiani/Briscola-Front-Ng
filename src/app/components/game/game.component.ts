@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { mazzo } from '../../models/mazzo';
 import { Howl } from 'howler';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-game',
@@ -22,6 +23,9 @@ export class GameComponent {
 
   private id: number = 0;
   private socket:WebSocket;
+
+  @ViewChild('mySwal')
+  public readonly mySwal!: SwalComponent;
   
   Mazzi: mazzo[] = [];
   YourId: number;
@@ -219,7 +223,17 @@ export class GameComponent {
           document.getElementById("card_"+this.YourId+index)!.className = fam + element.Number; 
         });*/
         break;
+      case "YouWin":
+      this.mySwal.title = "Hai vinto!";
+      this.mySwal.fire().then( ()=> {
+        document.location.href="/";
+      });
+      break;
       case "WinnerIs":
+      this.mySwal.title = "Vince " + msg.Name + "!";
+      this.mySwal.fire().then( ()=> {
+        document.location.href="/";
+      });
       break;
       case "drop":
         let clicked = false;
