@@ -15,6 +15,10 @@ export class GameComponent {
   Mazzi: mazzo[] = [];
   YourId: number;
 
+  async delay(ms: number):Promise<void> {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   ConvertFam(cls: string): {Family: Number; Number: Number;} {
     let fam:Number = 0;
     switch(cls[0]){
@@ -33,7 +37,7 @@ export class GameComponent {
     }
     return {
       Family: fam,
-      Number: Number(cls.slice(1))
+      Number: (Number(cls.slice(1)) ?? 0)
     }
   }
 
@@ -98,17 +102,26 @@ export class GameComponent {
         document.getElementById("briscola")!.className = "briscola " + fam + msg.Card.Number;
         break;
       case "pick":
-        document.getElementById("mazzo")!.classList.add("tbc");
-        document.getElementById("mazzo")!.onclick = () => { this.socket.send(JSON.stringify({
+        let elementmazzo = document.getElementById("mazzo");
+        elementmazzo!.classList.add("tbc");
+        elementmazzo!.onclick = () => { this.socket.send(JSON.stringify({
           Status: "picked"
         }));
-        document.getElementById("mazzo")!.classList.remove("tbc");
+        elementmazzo!.classList.remove("tbc");
+        elementmazzo!.onclick = null;
        }
         break;
+      // queste sono dell'altro player
       case "pickedTableCards":
+        let b = document.getElementsByClassName("cpick");
+        Array.from(b).forEach( async (element) => {
+        element.className = "cempty";
+       });
+       break;
+      // queste sono x me
       case "pickTableCards":
        let a = document.getElementsByClassName("cpick");
-       Array.from(a).forEach(function (element) {
+       Array.from(a).forEach( async (element) => {
         element.className = "cempty";
       });
       break;
@@ -198,13 +211,14 @@ export class GameComponent {
         for (let i = 0; i < 3; i++){
           let a = document.getElementById("card_"+this.YourId+i);
           a!.onclick = () => { 
-            let sendfam = this.ConvertFam(a!.className);
+            let sendfam = this.ConvertFam(a!.classList[0]);
             this.socket.send(JSON.stringify({
               Status: "drop",
               Card: sendfam
             }
             ))
             a!.className += " cpick";
+            a!.onclick = null;
           };
         }
       break;

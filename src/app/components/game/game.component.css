@@ -9,6 +9,10 @@
 
 .deck {display: flex; gap:10px; padding:15px}
 
+.rot-1 {
+    order: 999;
+}
+
 .rot-2, .rot-3 {
     transform: scale(0.6) rotate(90deg);
     position: absolute;
