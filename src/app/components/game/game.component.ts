@@ -105,10 +105,44 @@ export class GameComponent {
         document.getElementById("mazzo")!.classList.remove("tbc");
        }
         break;
+      case "pickedTableCards":
+      case "pickTableCards":
+       let a = document.getElementsByClassName("cpick");
+       Array.from(a).forEach(function (element) {
+        element.className = "cempty";
+      });
+      break;
       case "playerPick":
-        for (let i = 0; i < msg.NCards;i++){
+        /*for (let i = 0; i < msg.NCards;i++){
           document.getElementById("card_" + msg.PlayerId + i)!.className = "bc";
+        }*/
+        for (let j = 0; j < 3 && msg.NCards > 0; j++){
+          let a = document.getElementById("card_" + msg.PlayerId + j);
+          if (a!.className === "cempty")
+          {
+            msg.NCards--;
+            a!.className = "bc";
+          }
         }
+        break;
+      case "playerDrop":
+        fam = "";
+        switch(msg.Card.Family) {
+          //spade  0 - coppe 1  - denari 2  - bastoni 3 
+          case 0:
+            fam = "s";
+            break;
+          case 1:
+            fam = "c";
+            break;
+          case 2:
+            fam = "d";
+            break;
+          case 3:
+            fam = "b";
+            break;
+        }
+        document.getElementById("card_" + msg.PlayerId + Math.floor(Math.random() * 3))!.className = fam + msg.Card.Number + " cpick";
         break;
       case "Cards":
         for (let i = 0, j = 0; i < msg.Cards.length;)
@@ -170,7 +204,7 @@ export class GameComponent {
               Card: sendfam
             }
             ))
-            a!.className = "cempty";
+            a!.className += " cpick";
           };
         }
       break;

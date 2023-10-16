@@ -17,7 +17,22 @@
     top: 0;
 }
 
-.rot-1 div {
+.rot-1 .cpick {
+    transform: translateY(-30px) !important;
+}
+.rot-0 .cpick {
+    transform: translateY(30px) !important;
+}
+
+.rot-3 .cpick {
+    transform: translateY(20px) !important;
+}
+
+.rot-2 .cpick {
+    transform: translateY(20px) !important;
+}
+
+.rot-0 div ,.rot-1 div, .rot-2 div, .rot-3 div {
     transition: transform 1s ease;
 }
 
@@ -26,13 +41,11 @@
 }
 
 .rot-2 {
-    right: 0;
     pointer-events: none;
 }
 
 .rot-3 {
     transform: scale(0.6) rotate(270deg);
-    left: 0;
     pointer-events: none;
 }
 
@@ -48,7 +61,7 @@
 .second {
     position: absolute;
     left: 0;
-    right: 0;
+    right: 15px;
     top: 0;
     bottom: 0;
     margin: auto;gap:50px;
