@@ -50,7 +50,7 @@ export class GameComponent {
     });
 
     console.log(this.id);
-    this.socket = new WebSocket ( "ws://localhost:5177/ws/" + this.id );
+    this.socket = new WebSocket ( "wss://api.ittsrewritten.com/ws/" + this.id );
     this.socket.addEventListener("open", (event) => {
       this.socket.send(JSON.stringify({
           Name: Name
@@ -207,10 +207,17 @@ export class GameComponent {
           document.getElementById("card_"+this.YourId+index)!.className = fam + element.Number; 
         });*/
         break;
+      case "WinnerIs":
+      break;
       case "drop":
+        let clicked = false;
         for (let i = 0; i < 3; i++){
           let a = document.getElementById("card_"+this.YourId+i);
           a!.onclick = () => { 
+            if (clicked == true) {
+              return;
+            }
+            clicked = true
             let sendfam = this.ConvertFam(a!.classList[0]);
             this.socket.send(JSON.stringify({
               Status: "drop",

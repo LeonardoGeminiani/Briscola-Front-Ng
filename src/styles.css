@@ -5,6 +5,7 @@
     --c2: black;
     --c3: #13781D;
     --c4: #FFC700;
+    --c5: #197592;
     --f1: "Bubble Garden Regular";
     --f2: "Bubble Garden Bold"
 }
@@ -24,12 +25,18 @@
     src: local('Bubble Garden Bold'), url('/assets/BubbleGardenBold-Yz7d4.woff') format('woff');
     }
 
-body {
+    html body.swal2-height-auto {
+      height: 100vh !important
+    }
+
+    body {
+    margin: 0 auto;
     height: 100vh;
     width: 100%;
+    max-width: 414px;
     overflow-x: hidden;
     background: radial-gradient(circle, rgba(64,163,74,1) 0%, rgba(19,120,29,1) 100%);
-}
+    }
 
 .btnb {
     border: white 1px solid;
@@ -42,9 +49,13 @@ body {
     font-family: var(--f1);
 }
 
+.btnb.btn-blue {
+    background-color: var(--c5);
+}
+
 .briscola {transform: rotate(90deg);}
 
-.mazzo {background-color: white; z-index: 2;;border-radius: 4.25px;width: 79px;height: 133px;}
+.mazzo {background: url('./assets/bc_noshadow.png') no-repeat 0px 0;width: 79px;height: 133px;opacity: 1 !important;background-color: transparent !important;}
 
 .bc {background: url('./assets/bc.png') no-repeat 0px 0;width: 79px;height: 133px;}
 

@@ -1,5 +1,29 @@
 <div class="newgame">
     <img src="./assets/logo.png" class="mainlogo img-fluid"/>
-    <button class="btnb" [swal]="['Oops!', 'This is not implemented yet :/', 'warning']">PLAY</button>
-    <button class="btnb" (click)="connect()">PLAY</button>
+    <button id="mainmenu" (click)="setup()" class="btnb mb-3">CREA</button>
+    <button id="mainmenu" (click)="setup()" class="btnb btn-blue">UNISCITI</button>
+    <div id="menusettings" hidden="true">
+        <div class="mb-2">
+        <p>Username</p>
+        <input id="username" type="text"/>
+        </div>
+        <div class="wrapcheck">
+            <div>
+            <p>Con amici</p>
+            <input id="online" name="onlineoff" type="radio"/>
+            </div>
+            <div>
+            <p>Da solo</p>
+            <input id="singleplayer" name="onlineoff" type="radio"/>
+            </div>
+        </div>
+        <div class="mt-2 mb-2">
+            <div id="onlinecheck" hidden="true">
+                <p>Quanti giocatori?</p>
+                <input id="nplayers" type="number" min="2" max="4"/>
+            </div>
+        </div>
+        <button id="mainmenu" (click)="connect()" class="btnb mt-3">PLAY</button>
+    </div>
+    <!--<button class="btnb" (click)="connect()">PLAY</button>-->
 </div>

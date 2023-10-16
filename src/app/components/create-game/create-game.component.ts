@@ -16,13 +16,14 @@ export class CreateGameComponent {
 
   setup() 
   {
-
+    document.getElementById("menusettings")!.hidden = false;
+    document.getElementById("mainmenu")!.hidden = true;
   }
 
   connect()
   {
     console.log('Connecting');
-    fetch("http://localhost:5177/CreateGame", {
+    fetch("https://api.ittsrewritten.com/CreateGame", {
     method: "POST",
     body: JSON.stringify({
         briscolaMode: 2,

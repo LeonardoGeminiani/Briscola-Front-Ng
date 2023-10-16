@@ -9,3 +9,44 @@
     justify-content: center;
     flex-direction:column;
 }
+
+body.swal2-height-auto {
+    height: 100% !important
+}
+
+#menusettings {
+    text-align: center;
+}
+
+#menusettings p {
+    font-family: var(--f1);
+    color: var(--c1);
+    font-size: 30px;
+    line-height: 30px;
+    margin-bottom: 5px;
+}
+
+#menusettings input[type = text], #menusettings input[type = number] {
+    border-radius: 10px;
+    border: 0;
+    height: 30px;
+    width: 100%;
+}
+
+#menusettings .wrapcheck {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+#menusettings .wrapcheck div {
+    display: flex;
+    flex-direction: column;
+}
+
+#menusettings input[type = radio] {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    accent-color: var(--c4);
+}
