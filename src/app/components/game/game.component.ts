@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { mazzo } from '../../models/mazzo';
+import { Howl } from 'howler';
 
 @Component({
   selector: 'app-game',
@@ -8,6 +9,16 @@ import { mazzo } from '../../models/mazzo';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
+
+  sound = new Howl({
+    src: ['./assets/menu.mp3'],
+    html5 :true,
+    loop: true,
+  });
+
+  play() {
+    this.sound.play();
+  }
 
   private id: number = 0;
   private socket:WebSocket;
@@ -42,6 +53,7 @@ export class GameComponent {
   }
 
   constructor(private route: ActivatedRoute) {
+    this.play();
     this.YourId = -1;
     let Name: string;
     this.route.queryParamMap.subscribe(params => {
