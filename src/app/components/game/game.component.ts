@@ -106,7 +106,9 @@ export class GameComponent {
        }
         break;
       case "playerPick":
-        //document.getElementById("")
+        for (let i = 0; i < msg.NCards;i++){
+          document.getElementById("card_" + msg.PlayerId + i)!.className = "bc";
+        }
         break;
       case "Cards":
         for (let i = 0, j = 0; i < msg.Cards.length;)

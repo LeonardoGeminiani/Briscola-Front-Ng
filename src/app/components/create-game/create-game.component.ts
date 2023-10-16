@@ -26,7 +26,7 @@ export class CreateGameComponent {
     method: "POST",
     body: JSON.stringify({
         briscolaMode: 4,
-        userNumber: 2,
+        userNumber: 1,
         difficulty: 1
     }),
     headers: {

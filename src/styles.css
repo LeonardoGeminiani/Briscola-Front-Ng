@@ -46,6 +46,8 @@ body {
 
 .mazzo {background-color: white; z-index: 2;;border-radius: 4.25px;width: 79px;height: 133px;}
 
+.bc {background: url('./assets/bc.png') no-repeat 0px 0;width: 79px;height: 133px;}
+
 /* SPADE 0 */
 .s1 {background: url('./assets/s.png') no-repeat 0px 0;width: 79px;height: 133px;}
 .s2 {background: url('./assets/s.png') no-repeat -113px 0;width: 79px;height: 133px;}
