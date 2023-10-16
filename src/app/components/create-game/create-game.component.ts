@@ -25,7 +25,7 @@ export class CreateGameComponent {
     fetch("http://localhost:5177/CreateGame", {
     method: "POST",
     body: JSON.stringify({
-        briscolaMode: 3,
+        briscolaMode: 4,
         userNumber: 1,
         difficulty: 1
     }),
