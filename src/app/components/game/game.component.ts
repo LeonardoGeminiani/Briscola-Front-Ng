@@ -70,6 +70,7 @@ export class GameComponent {
             //document.getElementById("player" + element.PlayerId)!.innerHTML = element.PlayerName;
             if(Number(element.PlayerId) === this.YourId){
               this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId, 1);
+              return;
             } else {
               this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId, j);
             }
@@ -108,6 +109,35 @@ export class GameComponent {
         //document.getElementById("")
         break;
       case "Cards":
+        for (let i = 0, j = 0; i < msg.Cards.length;)
+        {
+          let a = document.getElementById("card_"+this.YourId+j);
+          if (a?.className !== "cempty") {
+            j++;
+            continue;
+          }
+
+          fam = "";
+          switch(msg.Cards[i].Family) {
+            //spade  0 - coppe 1  - denari 2  - bastoni 3 
+            case 0:
+              fam = "s";
+              break;
+            case 1:
+              fam = "c";
+              break;
+            case 2:
+              fam = "d";
+              break;
+            case 3:
+              fam = "b";
+              break;
+          }
+
+          a.className = fam + msg.Cards[i].Number;
+          i++;
+        }
+        /*
         msg.Cards.forEach((element: {Family: Number; Number: Number;}, index: Number) => {
           fam = "";
           switch(element.Family) {
@@ -125,8 +155,8 @@ export class GameComponent {
               fam = "b";
               break;
           }
-          document.getElementById("card_"+this.YourId+index)!.className = fam + element.Number;
-        });
+          document.getElementById("card_"+this.YourId+index)!.className = fam + element.Number; 
+        });*/
         break;
       case "drop":
         for (let i = 0; i < 3; i++){
@@ -136,7 +166,10 @@ export class GameComponent {
             this.socket.send(JSON.stringify({
               Status: "drop",
               Card: sendfam
-            }))};
+            }
+            ))
+            a!.className = "cempty";
+          };
         }
       break;
       default:
