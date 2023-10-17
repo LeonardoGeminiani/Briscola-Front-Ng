@@ -69,9 +69,6 @@ export class CreateGameComponent {
     let nplayers;
     if (this.mp) {
       nplayers = (<HTMLInputElement>document.getElementById("nplayers")).value;
-      if (nplayers == "1") {
-        nplayers = "2";
-      }
       players = nplayers;
     } else {
       players = 1;
@@ -80,6 +77,10 @@ export class CreateGameComponent {
     console.log("nplayers " + nplayers);
     console.log("players " + players);
 
+    if (Number(nplayers) > 4 || Number(players) > 4 || Number(nplayers) < 2) {
+      return;
+    }
+    
     this.play();
     console.log('Connecting');
     fetch("https://api.ittsrewritten.com/CreateGame", {
