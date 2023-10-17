@@ -31,7 +31,7 @@
 
     body {
     margin: 0 auto;
-    height: 100vh;
+    height: 100svh;
     width: 100%;
     max-width: 414px;
     overflow-x: hidden;
@@ -47,6 +47,7 @@
     border-radius: 10px;
     font-size: 31px;
     font-family: var(--f1);
+    text-align: center;
 }
 
 .btnb.btn-blue {
