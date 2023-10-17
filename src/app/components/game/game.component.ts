@@ -84,6 +84,7 @@ export class GameComponent {
         this.YourId = Number(msg.Id);
       break;
       case "playerList":
+        document.getElementById("messagewait")!.hidden = true;
         this.Mazzi = [];
         let j = 0;
         msg.Players.forEach((element: { PlayerId: string; PlayerName: string; }) => {
