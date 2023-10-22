@@ -172,7 +172,16 @@ export class GameComponent {
             fam = "b";
             break;
         }
-        document.getElementById("card_" + msg.PlayerId + Math.floor(Math.random() * 3))!.className = fam + msg.Card.Number + " cpick";
+        let arr = [];
+        for(let i = 0; i < 3; ++i){
+          let tmp = document.getElementById("card_" + msg.PlayerId + i);
+          if(tmp!.classList.contains("cempty")) continue;
+          arr.push(tmp);
+        }
+        arr[Math.floor(Math.random() * arr.length)]!.className = fam + msg.Card.Number + " cpick";
+        break;
+      case "BriscolaInMazzo":
+        document.getElementById("briscola")!.className = "briscola cempty";
         break;
       case "Cards":
         for (let i = 0, j = 0; i < msg.Cards.length;)
