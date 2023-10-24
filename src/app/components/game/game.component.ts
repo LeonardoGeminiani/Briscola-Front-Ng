@@ -234,16 +234,19 @@ export class GameComponent {
         });*/
         break;
       case "YouWin":
-      this.mySwal.title = "Hai vinto!";
-      this.mySwal.fire().then( ()=> {
-        document.location.href="/";
-      });
+        this.mySwal.title = "Hai vinto!";
+        this.mySwal.fire().then( ()=> {
+          document.location.href="/";
+        });
       break;
       case "WinnerIs":
-      this.mySwal.title = "Vince " + msg.Name + "!";
-      this.mySwal.fire().then( ()=> {
-        document.location.href="/";
-      });
+        this.mySwal.title = "Vince " + msg.Name + "!";
+        this.mySwal.fire().then( ()=> {
+          document.location.href="/";
+        });
+      break;
+      case "Points":
+        document.getElementById("Points")!.innerText = msg.Value;
       break;
       case "drop":
         let clicked = false;
