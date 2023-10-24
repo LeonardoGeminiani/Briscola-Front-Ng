@@ -100,6 +100,7 @@ export class GameComponent {
         });
         break;
       case "briscola":
+        //document.getElementsByClassName('rot-1')[0].appendChild(document.getElementById('Points')!);
         fam = "";
         switch(msg.Card.Family) {
           //spade  0 - coppe 1  - denari 2  - bastoni 3 

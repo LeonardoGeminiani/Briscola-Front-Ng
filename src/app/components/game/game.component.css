@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.deck {display: flex; gap:10px; padding:15px}
+.deck {display: flex; gap:10px; padding:15px;flex-wrap: wrap;justify-content: center;}
 
 #messagewait {
     color: white;
@@ -101,4 +101,13 @@
 		transform: scale(0.95);
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	}
+}
+
+#Points {
+    flex-basis: 100%;
+    order: -1;
+    text-align: center;
+    color: var(--c1);
+    font-family: var(--f1);
+    font-size: 25px;
 }
