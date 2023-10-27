@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { mazzo } from '../../models/mazzo';
 import { Howl } from 'howler';
@@ -9,7 +9,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent {
+export class GameComponent implements OnDestroy {
 
   sound = new Howl({
     src: ['./assets/menu.mp3'],
@@ -54,6 +54,11 @@ export class GameComponent {
       Family: fam,
       Number: (Number(cls.slice(1)) ?? 0)
     }
+  }
+
+  ngOnDestroy(): void {
+    // deleate sockets
+    document.location.href="/";
   }
 
   constructor(private route: ActivatedRoute) {
