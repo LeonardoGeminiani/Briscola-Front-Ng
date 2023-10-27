@@ -40,7 +40,7 @@ export class CreateGameComponent {
     this.router.navigate(['game'], {
       queryParams: {
         id : Number((<HTMLInputElement>document.getElementById("idpartita")).value),
-        Name : (<HTMLInputElement>document.getElementById("username")).value
+        Name : (<HTMLInputElement>document.getElementById("username-1")).value
       }});
   }
 
@@ -64,7 +64,7 @@ export class CreateGameComponent {
 
   connect()
   {
-    let username = (<HTMLInputElement>document.getElementById("username")).value;
+    let username = (<HTMLInputElement>document.getElementById("username-0")).value;
     let players;
     let nplayers;
     if (this.mp) {
