@@ -80,9 +80,8 @@ export class GameComponent implements OnDestroy {
 
     this.socket.addEventListener("message", (event) => 
     {
-
-      console.log("Message from server ", event.data);
       var msg = JSON.parse(event.data);
+      console.log(msg);
       let fam;
       switch(msg.Status) {
       case "YourId":
