@@ -303,23 +303,30 @@ export class GameComponent implements OnDestroy {
         
         for (let i = 0; i < msg.Players.length; i++){
           let n = Number(msg.Players[i].CardsNumber);
+          let c = msg.Players[i].DropCard;
           for(let j = 0; j < n; j++){
             // console.log("card_" + msg.Players[i].PlayerId + j);
             this.Mazzi[Number(msg.Players[i].PlayerId)].cards[j].cls = "bc";
             // let a = document.getElementById("card_" + msg.Players[i].PlayerId + j);
             // a!.className = "bc";
           }
+          if(c !== null){
+            this.Mazzi[Number(msg.Players[i].PlayerId)].cards[n].cls = this.GetFam(c.Family) + c.Number;
+          }
         }
 
         this.Points = Number(msg.PlayerPoints);
-
         document.getElementById("briscola")!.className = "briscola " + this.GetFam(msg.Briscola.Family) + msg.Briscola.Number;
         // this.SetPoints(msg.PlayerPoints);
+      break
+      case "YourCard":
+        for (let i = 0; i < msg.Cards.length; i++){
+          this.Mazzi[this.YourId].cards[i].cls = this.GetFam(msg.Cards[i].Family) + msg.Cards[i].Number;
+        }
       break;
       default:
         return;
       }
-
     });
   }
 }
