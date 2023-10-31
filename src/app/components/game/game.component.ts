@@ -23,6 +23,7 @@ export class GameComponent implements OnDestroy {
 
   private id: number = 0;
   private socket:WebSocket;
+  public Points: number = 0;
 
   @ViewChild('mySwal')
   public readonly mySwal!: SwalComponent;
@@ -56,9 +57,47 @@ export class GameComponent implements OnDestroy {
     }
   }
 
+  GetFam(Family: Number){
+    let fam = "";
+    switch(Family) {
+      //spade  0 - coppe 1  - denari 2  - bastoni 3 
+      case 0:
+        fam = "s";
+        break;
+      case 1:
+        fam = "c";
+        break;
+      case 2:
+        fam = "d";
+        break;
+      case 3:
+        fam = "b";
+        break;
+    }
+
+    return fam;
+  }
+
   ngOnDestroy(): void {
     // deleate sockets
     document.location.href="/";
+  }
+
+  init(msg: any): void {
+    document.getElementById("messagewait")!.hidden = true;
+    this.Mazzi = [];
+    let j = 0;
+    msg.Players.forEach((element: { PlayerId: string; PlayerName: string; }) => {
+        //document.getElementById("player" + element.PlayerId)!.innerHTML = element.PlayerName;
+        if(Number(element.PlayerId) === this.YourId){
+          this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId, 1);
+          return;
+        } else {
+          this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId, j);
+        }
+        j++;
+        if(j === 1) j++;
+    });
   }
 
   constructor(private route: ActivatedRoute) {
@@ -88,39 +127,26 @@ export class GameComponent implements OnDestroy {
         this.YourId = Number(msg.Id);
       break;
       case "playerList":
-        document.getElementById("messagewait")!.hidden = true;
-        this.Mazzi = [];
-        let j = 0;
-        msg.Players.forEach((element: { PlayerId: string; PlayerName: string; }) => {
-            //document.getElementById("player" + element.PlayerId)!.innerHTML = element.PlayerName;
-            if(Number(element.PlayerId) === this.YourId){
-              this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId, 1);
-              return;
-            } else {
-              this.Mazzi[Number(element.PlayerId)] = new mazzo(element.PlayerId, j);
-            }
-            j++;
-            if(j === 1) j++;
-        });
+        this.init(msg);
         break;
       case "briscola":
         //document.getElementsByClassName('rot-1')[0].appendChild(document.getElementById('Points')!);
-        fam = "";
-        switch(msg.Card.Family) {
-          //spade  0 - coppe 1  - denari 2  - bastoni 3 
-          case 0:
-            fam = "s";
-            break;
-          case 1:
-            fam = "c";
-            break;
-          case 2:
-            fam = "d";
-            break;
-          case 3:
-            fam = "b";
-            break;
-        }
+        fam = this.GetFam(msg.Card.Family);
+        // switch(msg.Card.Family) {
+        //   //spade  0 - coppe 1  - denari 2  - bastoni 3 
+        //   case 0:
+        //     fam = "s";
+        //     break;
+        //   case 1:
+        //     fam = "c";
+        //     break;
+        //   case 2:
+        //     fam = "d";
+        //     break;
+        //   case 3:
+        //     fam = "b";
+        //     break;
+        // }
         document.getElementById("briscola")!.className = "briscola " + fam + msg.Card.Number;
         break;
       case "pick":
@@ -135,55 +161,70 @@ export class GameComponent implements OnDestroy {
         break;
       // queste sono dell'altro player
       case "pickedTableCards":
-        let b = document.getElementsByClassName("cpick");
-        Array.from(b).forEach( async (element) => {
-        element.className = "cempty";
-       });
+        this.Mazzi.forEach(el => el.cards.forEach(c => {
+          if(c.cls.includes("cpick")){
+            c.cls = "cempty";
+          }
+        }));
+      //   let b = document.getElementsByClassName("cpick");
+      //   Array.from(b).forEach( async (element) => {
+      //   element.className = "cempty";
+      //  });
        break;
       // queste sono x me
       case "pickTableCards":
-       let a = document.getElementsByClassName("cpick");
-       Array.from(a).forEach( async (element) => {
-        element.className = "cempty";
-      });
+      //  let a = document.getElementsByClassName("cpick");
+      //  Array.from(a).forEach( async (element) => {
+      //   element.className = "cempty";
+      // });
+      this.Mazzi.forEach(el => el.cards.forEach(c => {
+        if(c.cls.includes("cpick")){
+          c.cls = "cempty";
+        }
+      }));
       break;
       case "playerPick":
         /*for (let i = 0; i < msg.NCards;i++){
           document.getElementById("card_" + msg.PlayerId + i)!.className = "bc";
         }*/
         for (let j = 0; j < 3 && msg.NCards > 0; j++){
-          let a = document.getElementById("card_" + msg.PlayerId + j);
-          if (a!.className === "cempty")
+          // let a = document.getElementById("card_" + msg.PlayerId + j);
+          if (
+            this.Mazzi[Number(msg.PlayerId)].cards[j].cls === "cempty")
           {
             msg.NCards--;
-            a!.className = "bc";
+            this.Mazzi[Number(msg.PlayerId)].cards[j].cls = "bc";
           }
         }
         break;
       case "playerDrop":
-        fam = "";
-        switch(msg.Card.Family) {
-          //spade  0 - coppe 1  - denari 2  - bastoni 3 
-          case 0:
-            fam = "s";
-            break;
-          case 1:
-            fam = "c";
-            break;
-          case 2:
-            fam = "d";
-            break;
-          case 3:
-            fam = "b";
-            break;
-        }
+        fam = this.GetFam(msg.Card.Family);
+        // switch(msg.Card.Family) {
+        //   //spade  0 - coppe 1  - denari 2  - bastoni 3 
+        //   case 0:
+        //     fam = "s";
+        //     break;
+        //   case 1:
+        //     fam = "c";
+        //     break;
+        //   case 2:
+        //     fam = "d";
+        //     break;
+        //   case 3:
+        //     fam = "b";
+        //     break;
+        // }
+        
         let arr = [];
         for(let i = 0; i < 3; ++i){
-          let tmp = document.getElementById("card_" + msg.PlayerId + i);
-          if(tmp!.classList.contains("cempty")) continue;
-          arr.push(tmp);
+          
+          // let tmp = document.getElementById("card_" + msg.PlayerId + i);
+          // if(tmp!.classList.contains("cempty")) continue;
+          // arr.push(tmp);
+          if(this.Mazzi[Number(msg.PlayerId)].cards[i].cls.includes("cempty")) continue;
+          arr.push(i);
         }
-        arr[Math.floor(Math.random() * arr.length)]!.className = fam + msg.Card.Number + " cpick";
+        this.Mazzi[Number(msg.PlayerId)].cards[arr[Math.floor(Math.random() * arr.length)]].cls = fam + msg.Card.Number + " cpick";
         break;
       case "BriscolaInMazzo":
         document.getElementById("briscola")!.className = "briscola cempty";
@@ -191,52 +232,33 @@ export class GameComponent implements OnDestroy {
       case "Cards":
         for (let i = 0, j = 0; i < msg.Cards.length;)
         {
-          let a = document.getElementById("card_"+this.YourId+j);
-          if (a?.className !== "cempty") {
+          console.log(this.Mazzi[this.YourId].cards[j].cls);
+          // let a = document.getElementById("card_"+this.YourId+j);
+          if (this.Mazzi[this.YourId].cards[j].cls !== "cempty") {
             j++;
             continue;
           }
 
-          fam = "";
-          switch(msg.Cards[i].Family) {
-            //spade  0 - coppe 1  - denari 2  - bastoni 3 
-            case 0:
-              fam = "s";
-              break;
-            case 1:
-              fam = "c";
-              break;
-            case 2:
-              fam = "d";
-              break;
-            case 3:
-              fam = "b";
-              break;
-          }
+          fam = this.GetFam(msg.Cards[i].Family);
+          // switch(msg.Cards[i].Family) {
+          //   //spade  0 - coppe 1  - denari 2  - bastoni 3 
+          //   case 0:
+          //     fam = "s";
+          //     break;
+          //   case 1:
+          //     fam = "c";
+          //     break;
+          //   case 2:
+          //     fam = "d";
+          //     break;
+          //   case 3:
+          //     fam = "b";
+          //     break;
+          // }
 
-          a.className = fam + msg.Cards[i].Number;
+          this.Mazzi[this.YourId].cards[j].cls = fam + msg.Cards[i].Number;
           i++;
         }
-        /*
-        msg.Cards.forEach((element: {Family: Number; Number: Number;}, index: Number) => {
-          fam = "";
-          switch(element.Family) {
-            //spade  0 - coppe 1  - denari 2  - bastoni 3 
-            case 0:
-              fam = "s";
-              break;
-            case 1:
-              fam = "c";
-              break;
-            case 2:
-              fam = "d";
-              break;
-            case 3:
-              fam = "b";
-              break;
-          }
-          document.getElementById("card_"+this.YourId+index)!.className = fam + element.Number; 
-        });*/
         break;
       case "YouWin":
         this.mySwal.title = "Hai vinto!";
@@ -251,27 +273,48 @@ export class GameComponent implements OnDestroy {
         });
       break;
       case "Points":
-        document.getElementById("Points")!.innerText = msg.Value;
+        this.Points = Number(msg.Value);
+        // this.SetPoints(msg.Value);
       break;
       case "drop":
         let clicked = false;
         for (let i = 0; i < 3; i++){
-          let a = document.getElementById("card_"+this.YourId+i);
-          a!.onclick = () => { 
+          // let a = document.getElementById("card_"+this.YourId+i);
+          this.Mazzi[this.YourId].cards[i].c = () => {
             if (clicked == true) {
               return;
             }
             clicked = true
-            let sendfam = this.ConvertFam(a!.classList[0]);
+            let sendfam = this.ConvertFam(this.Mazzi[this.YourId].cards[i].cls.split(" ")[0].trim());
             this.socket.send(JSON.stringify({
               Status: "drop",
               Card: sendfam
             }
             ))
-            a!.className += " cpick";
-            a!.onclick = null;
+            this.Mazzi[this.YourId].cards[i].cls += " cpick";
+            this.Mazzi[this.YourId].cards[i].c = () => {};
+            console.log(i);
           };
         }
+      break;        
+      case "info":
+        // reconnected
+        this.init(msg);
+        
+        for (let i = 0; i < msg.Players.length; i++){
+          let n = Number(msg.Players[i].CardsNumber);
+          for(let j = 0; j < n; j++){
+            // console.log("card_" + msg.Players[i].PlayerId + j);
+            this.Mazzi[Number(msg.Players[i].PlayerId)].cards[j].cls = "bc";
+            // let a = document.getElementById("card_" + msg.Players[i].PlayerId + j);
+            // a!.className = "bc";
+          }
+        }
+
+        this.Points = Number(msg.PlayerPoints);
+
+        document.getElementById("briscola")!.className = "briscola " + this.GetFam(msg.Briscola.Family) + msg.Briscola.Number;
+        // this.SetPoints(msg.PlayerPoints);
       break;
       default:
         return;

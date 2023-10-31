@@ -2,10 +2,10 @@
     <div class="second"><p id="messagewait">Attendo i giocatori..</p><div id="mazzo" class="mazzo cempty"></div><div id="briscola" class="cempty"></div></div>
     <div class="playerswrap">
         <div class="deck rot-{{m.indx}}" *ngFor="let m of Mazzi">
-            <div class="cempty" id={{m.ids[0]}}></div>
-            <div class="cempty" id={{m.ids[1]}}></div>
-            <div class="cempty" id={{m.ids[2]}}></div>
-            <div *ngIf="m.indx===1" id="Points">0</div>
+            <div [class]="m.cards[0].cls" (click)="m.cards[0].c()"></div>
+            <div [class]="m.cards[1].cls" (click)="m.cards[1].c()"></div>
+            <div [class]="m.cards[2].cls" (click)="m.cards[2].c()"></div>
+            <div *ngIf="m.indx===1" id="Points">{{Points}}</div>
         </div>
     </div>
     <!-- <div class="third">
